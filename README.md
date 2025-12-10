@@ -1,1 +1,1 @@
-pagina de portada pes acces més comode a web que puc mirar sovint
+pagina de portada pes acces més comode a webs que puc mirar sovint
