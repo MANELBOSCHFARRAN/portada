@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Manel</title>
+    <link rel="icon" type="image/png" href="images/portada/thumbnails/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Link styling no subratllats */
+        a,
+        a:hover,
+        a:focus,
+        a:visited {
+            text-decoration: none !important;
+            color: blue;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .link-box {
+            width: 100%;
+            height: 100px;
+            text-align: center;
+            padding: 5px;
+            transition: transform 0.2s;
+        }
+
+        .link-box:hover {
+            transform: scale(1.05);
+        }
+
+        .header {
+            background: #00dfff;
+            border: 1px solid #666;
+            padding: 10px 0;
+            width: 100%;
+        }
+
+        .footer {
+            background: #00dfff;
+            border: 1px solid #666;
+            padding: 10px 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .content {
+            margin: 20px auto;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .link-image {
+            max-height: 50px;
+            max-width: 80px;
+            margin-bottom: 5px;
+        }
+
+        #currentDateTime {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+
+        .search-container {
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        #searchInput {
+            padding: 8px 15px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #666;
+            display: none;
+        }
+
+        .google-apps-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .apps-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+        }
+
+        .apps-button:hover {
+            background-color: #e8eaed;
+        }
+
+        .apps-popup {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            z-index: 1000;
+            min-width: 160px;
+        }
+
+        .apps-popup a {
+            display: block;
+            padding: 8px;
+            text-decoration: none;
+            color: #202124;
+            font-family: Arial, sans-serif;
+        }
+
+        .apps-popup a:hover {
+            background-color: #f1f3f4;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header  bg-primary py-2">
+        <div class="d-flex justify-content-between align-items-center px-4">
+            <!-- Left Section -->
+            <div class="d-flex text-light align-items-center gap-3">
+                 <a class="text-warning" href="https://inalbo.net/beweb" target="_blank"> 
+                 <img alt="Beweb" src="images/portada/thumbnails/favicon.png" style="height: 40px;" /> Beweb
+                 </a>
+                
+                <h5 class="m-0 text-light font-sans-serif">Hello, Manel! </h5>
+
+            </div>
+
+            <!-- Center Section -->
+            <div class="d-flex align-items-center gap-3">
+
+                <img alt="Tàrrega" src="images/portada/thumbnails/tarrega2.png" style="height: 40px;" />
+            </div>
+
+            <!-- Right Section -->
+            <div class="d-flex align-items-center gap-3">
+                <h5 class="m-0 text-light font-sans-serif"> </h5>
+                <h5 id="currentDateTime" class="m-0 text-light font-sans-serif"></h5>
+            </div>
+        </div>
+
+    </div>
+    <!-- <div class="header">
+        <div class="d-flex justify-content-between align-items-center px-4">
+            <img alt="Bmw" src="images/portada/thumbnails/favicon.png" />
+            <h5 class="m-0 text-primary font-sans-serif">Hello, Manel!</h5>
+            <img alt="Tàrrega" src="images/portada/thumbnails/tarrega2.png" />
+            <h5 id="currentDateTime" class="m-0 text-primary font-sans-serif"></h5>
+        </div>
+    </div> -->
+
+    <div class="content">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search links..." />
+            <div class="google-apps-container">
+                <button class="apps-button" aria-label="Google Apps">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="#5f6368">
+                        <path d="M6,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z
+               M12,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z
+               M6,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z
+               M6,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z
+               M12,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z
+               M16,6c0,1.1 0.9,2 2,2s2,-0.9 2,-2 -0.9,-2 -2,-2 -2,0.9 -2,2z
+               M12,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z
+               M18,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z
+               M18,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z">
+                        </path>
+                    </svg>
+                </button>
+
+                <div class="apps-popup" id="appsPopup">
+                    <a href="https://calendar.google.com" target="_blank">📅 Calendar</a>
+                    <a href="https://mail.google.com" target="_blank">📧 Gmail</a>
+                    <a href="https://drive.google.com" target="_blank">📁 Drive</a>
+                    <a href="https://www.youtube.com" target="_blank">📺 YouTube</a>
+                    <a href="https://maps.google.com" target="_blank">🗺️ Maps</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="linksContainer" class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-1">
+            <!-- Links will be dynamically inserted here -->
+        </div>
+
+        <div id="noResults" class="no-results">
+            No matching links found.
+        </div>
+    </div>
+
+    <div class="footer bg-primary py-3 d-flex justify-content-center">
+        <img alt="Barcelona" src="images/portada/thumbnails/imagebcn2.png" style="height: 60px;" />
+    </div>
+
+    <script>
+        // Define your links in a collection for easier maintenance
+        const quickLinks = [
+            { name: "Google", url: "https://google.com/", iconPath: "images/portada/thumbnails/tn_google.gif" },
+            { name: "Gmail", url: "https://mail.google.com/", iconPath: "images/portada/thumbnails/tn_Gmail.gif" },
+            { name: "Outlook", url: "https://mail.live.com/", iconPath: "images/portada/thumbnails/tn_outlook.gif" },
+            { name: "La Caixa", url: "https://www.caixabank.cat/particular/home/particulars_ca.html", iconPath: "images/portada/thumbnails/tn_Lacaixa.gif" },
+            { name: "Arena", url: "https://inalbo.net/arena/", iconPath: "images/portada/thumbnails/castellArena.gif" },
+            { name: "ING", url: "https://ing.ingdirect.es/", iconPath: "images/portada/thumbnails/tn_ingdirect.gif" },
+            { name: "CincoDias", url: "http://cincodias.com/", iconPath: "images/portada/thumbnails/tn_cincodias.gif" },
+            { name: "Finanzas", url: "http://www.finanzas.com/", iconPath: "images/portada/thumbnails/tn_finanzas.gif" },
+            { name: "Vanguardia", url: "https://laVanguardia.com", iconPath: "images/portada/thumbnails/tn_vanguardia.gif" },
+            { name: "ElPeriodico", url: "https://www.elperiodico.CAT/", iconPath: "images/portada/thumbnails/tn_periodico.gif" },
+            { name: "ElMundo", url: "https://www.elmundo.es/", iconPath: "images/portada/thumbnails/tn_elmundo.gif" },
+            { name: "ElPais", url: "https://elpais.com/", iconPath: "images/portada/thumbnails/tn_elPais.gif" },
+            { name: "Barça", url: "https://www.fcbarcelona.cat", iconPath: "images/portada/thumbnails/tn_fcbarcelona.gif" },
+            { name: "Sport", url: "https://www.sport.es/", iconPath: "images/portada/thumbnails/tn_diarisport.gif" },
+            { name: "Marca", url: "https://www.marca.com/", iconPath: "images/portada/thumbnails/tn_marca.gif" },
+            { name: "As", url: "https://www.as.com/", iconPath: "images/portada/thumbnails/tn_logoas.gif" },
+            { name: "Rae", url: "https://www.RAE.ES", iconPath: "images/portada/thumbnails/tn_rae.gif" },
+            { name: "Diecat", url: "https://dlc.iec.cat/", iconPath: "images/portada/thumbnails/tn_diecat.gif" },
+            { name: "Dcvb", url: "https://dcvb.iecat.net/", iconPath: "images/portada/thumbnails/tn_diccatvalbal.gif" },
+            { name: "Wordreference", url: "https://www.Wordreference.com/", iconPath: "images/portada/thumbnails/tn_wordReference.gif" },
+            { name: "Facbook", url: "https://www.facebook.com/", iconPath: "images/portada/thumbnails/tn_facebook.gif" },
+            { name: "TestVelocidad", url: "https://www.movistar.es/particulares/test-de-velocidad/", iconPath: "images/portada/thumbnails/tn_movistarTest.jpg" },
+            { name: "Nou", url: "/", iconPath: "images/portada/thumbnails/castellArena.gif" },
+            { name: "Nou", url: "/", iconPath: "images/portada/thumbnails/castellArena.gif" }
+        ];
+
+        // Function to render links
+        function renderLinks(links) {
+            const container = document.getElementById('linksContainer');
+            container.innerHTML = '';
+
+            if (links.length === 0) {
+                document.getElementById('noResults').style.display = 'block';
+                return;
+            }
+
+            document.getElementById('noResults').style.display = 'none';
+
+            links.forEach(link => {
+                const col = document.createElement('div');
+                col.className = 'col';
+
+                const anchor = document.createElement('a');
+                anchor.href = link.url;
+                anchor.target = '_blank';
+                anchor.rel = 'noopener noreferrer';
+                anchor.className = 'd-block link-box';
+
+                const image = document.createElement('img');
+                image.alt = link.name;
+                image.src = link.iconPath;
+                image.className = 'link-image';
+
+                const breakLine = document.createElement('br');
+
+                const text = document.createTextNode(link.name);
+
+                anchor.appendChild(image);
+                anchor.appendChild(breakLine);
+                anchor.appendChild(text);
+                col.appendChild(anchor);
+                container.appendChild(col);
+            });
+        }
+
+        // Function to update date and time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = now.toLocaleDateString('ca-ES', options);
+            const timeStr = now.toLocaleTimeString('ca-ES');
+            document.getElementById('currentDateTime').textContent = `${dateStr} ${timeStr}`;
+        }
+
+        // Function to filter links based on search input
+        function filterLinks() {
+            const searchText = document.getElementById('searchInput').value.toLowerCase();
+            if (!searchText) {
+                renderLinks(quickLinks);
+                return;
+            }
+
+            const filteredLinks = quickLinks.filter(link =>
+                link.name.toLowerCase().includes(searchText) ||
+                link.url.toLowerCase().includes(searchText)
+            );
+
+            renderLinks(filteredLinks);
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function () {
+            // Render all links initially
+            renderLinks(quickLinks);
+
+            // Set up the date/time and update every second
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+
+            // Set up search functionality
+            document.getElementById('searchInput').addEventListener('input', filterLinks);
+        });
+
+
+        //googl
+        const button = document.querySelector('.apps-button');
+        const popup = document.getElementById('appsPopup');
+
+        button.addEventListener('click', () => {
+            popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!button.contains(e.target) && !popup.contains(e.target)) {
+                popup.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
